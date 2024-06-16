@@ -1,19 +1,17 @@
 import { hash } from "bcryptjs";
 import AppError from "../../../../errors/AppError";
 import { IUsersRepository } from "../domain/repositories/IUsersRepository";
-import User from "../entities/User";
+import User from "../infra/typeorm/entities/User";
+import { ICreateUser } from "../domain/models/ICreateUser";
+import { inject, injectable } from 'tsyringe';
 
-interface IRequest {
-    name: string;
-    email: string;
-    password: string;
-}
-
+@injectable()
 class CreateUserService {
     constructor(
+        @inject('UsersRepository')
         private usersRepository: IUsersRepository
     ) {}
-    public async execute({ name, email, password }: IRequest): Promise<User> {   
+    public async execute({ name, email, password }: ICreateUser): Promise<User> {   
         
         const emailExists = await this.usersRepository.findByEmail(email);
         

@@ -3,11 +3,15 @@ import cors from "cors";
 import routes from './routes'
 import AppError from "./errors/AppError";
 import './typeorm'
+import './container'
+import rateLimiter from "./middlewares/rateLimiter";
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+app.use(rateLimiter);
 
 app.use(routes);
 

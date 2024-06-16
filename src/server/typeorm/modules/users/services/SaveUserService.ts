@@ -1,23 +1,27 @@
 import { hash } from "bcryptjs";
 import AppError from "../../../../errors/AppError";
 import { IUsersRepository } from "../domain/repositories/IUsersRepository";
-import User from "../entities/User";
+import User from "../infra/typeorm/entities/User";
+import RedisCache from "../../../../cache/RedisCache";
+import { ICreateUser } from "../domain/models/ICreateUser";
+import { inject, injectable } from 'tsyringe';
 
-interface IRequest {
-    name: string;
-    email: string;
-    password: string;
-}
-
+@injectable()
 class SaveUserService {
     constructor(
+        @inject('UsersRepository')
         private usersRepository: IUsersRepository
     ) {}
-    public async execute({ name, email, password }: IRequest): Promise<User> {    
-        const user = await this.usersRepository.findByEmail(email);
-        
-        if (user == null) {
-            throw new AppError('User not found!');
+    public async execute({ name, email, password }: ICreateUser): Promise<User> { 
+        const redisCache = new RedisCache();
+        let user = await redisCache.recover<User>(email);
+
+        if (!user) {
+            user = await this.usersRepository.findByEmail(email);
+
+            if (user == null) {
+                throw new AppError('User not found!');
+            }
         }
 
         const hashedPassword = await hash(password, 8)
@@ -26,6 +30,8 @@ class SaveUserService {
         user.password = hashedPassword;
 
         await this.usersRepository.save(user);
+
+        await redisCache.save(email, user); 
 
         return user;
     }

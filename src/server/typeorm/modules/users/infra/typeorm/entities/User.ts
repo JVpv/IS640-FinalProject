@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { IUser } from "../domain/models/IUser";
+import { IUser } from "../../../domain/models/IUser";
+import { Exclude } from 'class-transformer';
 
 @Entity('jose_user')
 class User implements IUser {
@@ -13,6 +14,7 @@ class User implements IUser {
     email: string;
 
     @Column()
+    @Exclude()
     password: string;
 }
 

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import usersRouter from "../typeorm/modules/users/routes/user.routes";
+import usersRouter from "../typeorm/modules/users/infra/http/routes/user.routes";
 
 const routes = Router();
 

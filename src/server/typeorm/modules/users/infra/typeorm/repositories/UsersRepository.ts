@@ -1,12 +1,12 @@
 import { Repository } from "typeorm";
 import User from "../entities/User";
-import { dataSource } from "../../..";
-import { IUsersRepository } from "../domain/repositories/IUsersRepository";
-import { ICreateUser } from "../domain/models/ICreateUser";
-import { IUser } from "../domain/models/IUser";
+import { dataSource } from "../../../../..";
+import { IUsersRepository } from "../../../domain/repositories/IUsersRepository";
+import { ICreateUser } from "../../../domain/models/ICreateUser";
+import { IUser } from "../../../domain/models/IUser";
 
-class UsersRepository implements IUsersRepository {
-    private ormRepository: Repository<User>
+export default class UsersRepository implements IUsersRepository {
+    private ormRepository: Repository<User> 
 
     constructor() {
         this.ormRepository = dataSource.getRepository(User);
