@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 
-import { CreateJoseUser1718471570863 } from "./migrations/1718471570863-CreateJose_user";
+import User from "./modules/users/infra/typeorm/entities/User";
+import { CreateJoseUser1718562796487 } from "./migrations/1718562796487-CreateJose_user";
 
 export const dataSource = new DataSource({
   type: "postgres",
@@ -9,8 +10,10 @@ export const dataSource = new DataSource({
   username: "postgres",
   password: "docker",
   database: "IS640",
-  entities: [],
+  entities: [
+    User
+  ],
   migrations: [
-    CreateJoseUser1718471570863
+    CreateJoseUser1718562796487
   ],
 });

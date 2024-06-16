@@ -9,7 +9,7 @@ import { ICreateUser } from "../../../domain/models/ICreateUser";
 
 export default class UsersController {
     public async find(request: Request, response: Response): Promise<Response> {
-        const email = request.query.email;
+        const email = request.params.email;
 
         const findUser = container.resolve(FindUserService);
 
@@ -19,13 +19,13 @@ export default class UsersController {
     }
 
     public async create(request: Request, response: Response): Promise<Response> {
-        const name = request.query.name;
-        const email = request.query.email;
-        const password = request.query.password;
+        const name = request.body.name;
+        const email = request.body.email;
+        const password = request.body.password;
 
         const createUser = container.resolve(CreateUserService);
 
-        const user = createUser.execute({
+        const user = await createUser.execute({
             name,
             email,
             password
@@ -35,13 +35,13 @@ export default class UsersController {
     }
 
     public async save(request: Request, response: Response): Promise<Response> {
-        const name = request.query.name;
-        const email = request.query.email;
-        const password = request.query.password;
+        const name = request.body.name;
+        const email = request.body.email;
+        const password = request.body.password;
 
         const saveUser = container.resolve(SaveUserService);
 
-        const user = saveUser.execute({
+        const user = await saveUser.execute({
             name,
             email,
             password

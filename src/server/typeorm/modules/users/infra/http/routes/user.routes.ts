@@ -5,7 +5,15 @@ import UsersController from '../controllers/UsersController';
 const usersRouter = Router();
 const usersController = new UsersController();
 
-usersRouter.get('/:email', usersController.find);
+usersRouter.get('/:email', 
+    celebrate({
+        [Segments.PARAMS]: {
+            email: Joi.string().required()
+        }
+    }),
+    usersController.find
+);
+
 usersRouter.post('/', 
     celebrate({
         [Segments.BODY]: {
@@ -14,7 +22,9 @@ usersRouter.post('/',
             password: Joi.string().required()
         }
     }), 
-    usersController.create);
+    usersController.create
+);
+
 usersRouter.put('/',
     celebrate({
         [Segments.BODY]: {
@@ -23,6 +33,7 @@ usersRouter.put('/',
             password: Joi.string().required()
         }
     }),
-    usersController.save);
+    usersController.save
+);
 
 export default usersRouter;

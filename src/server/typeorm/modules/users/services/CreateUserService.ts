@@ -12,19 +12,18 @@ class CreateUserService {
         private usersRepository: IUsersRepository
     ) {}
     public async execute({ name, email, password }: ICreateUser): Promise<User> {   
-        
+
         const emailExists = await this.usersRepository.findByEmail(email);
         
         if (emailExists != null) {
             throw new AppError('Email already used!');
         }
 
-        // This is the part where the password is hashed
         const hashedPassword = await hash(password, 8);
         
         const user = this.usersRepository.create({ 
-            name, 
-            email, 
+            name: name, 
+            email: email, 
             password: hashedPassword
         });
         

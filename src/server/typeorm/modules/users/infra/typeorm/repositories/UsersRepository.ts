@@ -13,8 +13,10 @@ export default class UsersRepository implements IUsersRepository {
     }
 
     public async findByEmail(email: string): Promise<User | null> {
-        const user = await this.ormRepository.findOneBy({
-            email
+        const user = await this.ormRepository.findOne({
+            where: {
+                email: email
+            }
         });
 
         return user;
