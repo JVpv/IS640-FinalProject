@@ -31,6 +31,8 @@ class SaveUserService {
 
         await this.usersRepository.save(user);
 
+        // Logic to update passwords on the passwords history table
+
         await redisCache.save(email, user); 
 
         return user;

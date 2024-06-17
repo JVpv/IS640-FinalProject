@@ -21,6 +21,7 @@ export default class UsersRepository implements IUsersRepository {
 
         return user;
     }
+
     public async create({ name, email, password }: ICreateUser): Promise<User> {
         const user = this.ormRepository.create({ name, email, password });
 
@@ -28,6 +29,7 @@ export default class UsersRepository implements IUsersRepository {
 
         return user;
     }
+
     public async save(user: IUser): Promise<User> {
         await this.ormRepository.save(user);
 
