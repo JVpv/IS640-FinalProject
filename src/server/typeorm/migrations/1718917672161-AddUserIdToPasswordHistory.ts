@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, TableColumn, TableForeignKey } from "typeorm";
 
-export class AddUserIdToPasswordHistory1718578151274 implements MigrationInterface {
+export class AddUserIdToPasswordHistory1718917672161 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.addColumn(

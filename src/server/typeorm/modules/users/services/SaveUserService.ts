@@ -10,7 +10,7 @@ import { inject, injectable } from 'tsyringe';
 class SaveUserService {
     constructor(
         @inject('UsersRepository')
-        private usersRepository: IUsersRepository
+        private usersRepository: IUsersRepository,
     ) {}
     public async execute({ name, email, password }: ICreateUser): Promise<User> { 
         const redisCache = new RedisCache();
@@ -30,8 +30,6 @@ class SaveUserService {
         user.password = hashedPassword;
 
         await this.usersRepository.save(user);
-
-        // Logic to update passwords on the passwords history table
 
         await redisCache.save(email, user); 
 

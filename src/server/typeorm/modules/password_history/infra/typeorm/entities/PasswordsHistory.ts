@@ -12,20 +12,20 @@ class PasswordsHistory implements IPasswordsHistory {
     @Exclude()
     current_password: string;
     
-    @Column()
-    previous_password_1: string | null;
+    @Column({ type: 'varchar' })
+    previous_password_1: string;
 
-    @Column()
-    previous_password_2: string | null;
+    @Column({ type: 'varchar' })
+    previous_password_2: string;
 
-    @Column()
-    previous_password_3: string | null;
+    @Column({ type: 'varchar' })
+    previous_password_3: string;
 
-    @Column()
-    previous_password_4: string | null;
+    @Column({ type: 'varchar' })
+    previous_password_4: string;
 
-    @Column()
-    previous_password_5: string | null;
+    @Column({ type: 'varchar' })
+    previous_password_5: string;
 
     @Column()
     user_id: string;

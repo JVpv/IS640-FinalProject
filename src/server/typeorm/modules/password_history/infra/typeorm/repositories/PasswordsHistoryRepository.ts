@@ -24,7 +24,16 @@ export default class PasswordsHistoryRepository implements IPasswordsHistoryRepo
     }
 
     public async create({ current_password, user_id }: ICreatePasswordHistory): Promise<PasswordsHistory> {
-        const passwordsHistory = this.ormRepository.create({ current_password, user_id });
+        console.log(user_id);
+        const passwordsHistory = this.ormRepository.create({ 
+            current_password: current_password, 
+            user_id: user_id,
+            previous_password_1: "",
+            previous_password_2: "",
+            previous_password_3: "",
+            previous_password_4: "",
+            previous_password_5: "" 
+        });
 
         await this.ormRepository.save(passwordsHistory);
 

@@ -8,9 +8,9 @@ import { inject, injectable } from 'tsyringe';
 class FindUserService {
     constructor(
         @inject('UsersRepository')
-        private usersRepository: IUsersRepository
+        private usersRepository: IUsersRepository,
     ) {}
-    public async execute( email: string ): Promise<User | null> {
+    public async execute( email: string ): Promise<User> {
         const redisCache = new RedisCache();
 
         let user = await redisCache.recover<User>(email);
@@ -21,9 +21,9 @@ class FindUserService {
             if (user == null) {
                 throw new AppError('User not found!');
             }
-
-            await redisCache.save(email, user); 
         }
+
+        await redisCache.save(email, user);
 
         return user;
     }

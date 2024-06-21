@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/ChangePasswordForm.css"
 
 const ChangePasswordForm = () => {
@@ -26,6 +26,43 @@ const ChangePasswordForm = () => {
     const changePassword = (event) => {
         event.preventDefault();
 
+        const headers = { 'Content-Type': 'application/json' }
+        fetch('http://localhost:3333/users/'+userid)
+        .then(async response => {
+            const data = await response.json();
+
+            // check for error response
+            if (!response.ok) {
+                // get error message from body or default to response statusText
+                const error = (data && data.message) || response.statusText;
+                return Promise.reject(error);
+            }
+
+            this.setState({ totalReactPackages: data.total })
+        })
+        .catch(error => {
+            this.setState({ errorMessage: error.toString() });
+            alert('There was an error!', error);
+        });
+
+        // if (password_history) {
+        //     if(password_history.previous_password_4 != "")
+        //         password_history.previous_password_5 = password_history.previous_password_4;
+            
+        //     if(password_history.previous_password_3 != "")
+        //         password_history.previous_password_4 = password_history.previous_password_3;
+            
+        //     if(password_history.previous_password_2 != "")
+        //         password_history.previous_password_3 = password_history.previous_password_2;
+            
+        //     if(password_history.previous_password_1 != "")
+        //         password_history.previous_password_2 = password_history.previous_password_1;
+            
+        //     password_history.previous_password_1 = password_history?.current_password;
+
+        //     await this.passwordsHistoryController.save(password_history);
+        // }
+
         // Change this part. Passwords should be collected from database.
         const passwords = ["AA11!aaaaaaa", 
             "BB22@bbbbbbb", 
@@ -39,19 +76,19 @@ const ChangePasswordForm = () => {
             "JJ00)jjjjjjj"
         ]
         if(userid == "" || userid.includes(" "))
-            alert("UserID is invalid!")
+            alert("UserID is invalid!");
         else if (currentPassword != "AA11!aaaaaaa")
-            alert("Old password is incorrect!")
+            alert("Old password is incorrect!");
         else if (currentPassword == newPassword)
-            alert("New password cannot be the same as old password!")
+            alert("New password cannot be the same as old password!");
         else if (passwords.includes(newPassword))
-            alert("New password must be different from the 10 previous passwords!")
+            alert("New password must be different from the 10 previous passwords!");
         else if (newPassword != confirmPassword)
-            alert("New password and confirmation do not match!")
+            alert("New password and confirmation do not match!");
         else if (newPassword.includes(" "))
-            alert("New password must not contain empty spaces!")
+            alert("New password must not contain empty spaces!");
         else if (newPassword.length < 12)
-            alert("New password must be at least 12 characters long!")
+            alert("New password must be at least 12 characters long!");
         else {
             const specialCharacters = "[@_!$%^&*()<>?/\\|}{~:]#";
             var tempUpper = 0;
@@ -66,13 +103,13 @@ const ChangePasswordForm = () => {
                     tempUpper++;
             }
             if (tempUpper != 2)
-                alert("Password should have exactly two uppercase characters!")
+                alert("Password should have exactly two uppercase characters!");
             else if (tempNumber != 2)
-                alert("Password should have exactly two numbers!")
+                alert("Password should have exactly two numbers!");
             else if (tempSpecial != 1)
-                alert("Password should contain exactly one special character!")
+                alert("Password should contain exactly one special character!");
             else
-                alert("Password Changed!")
+                alert("Password Changed!");
         }
     };
     return (

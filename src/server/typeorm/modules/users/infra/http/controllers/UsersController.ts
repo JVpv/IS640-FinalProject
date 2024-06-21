@@ -1,9 +1,8 @@
 import CreateUserService from "../../../services/CreateUserService";
 import FindUserService from "../../../services/FindUserService";
-import { Request, Response } from "express"
+import { Request, Response } from "express";
 import SaveUserService from "../../../services/SaveUserService";
 import { instanceToInstance } from 'class-transformer';
-import UsersRepository from '../../typeorm/repositories/UsersRepository';
 import { container } from 'tsyringe';
 import { ICreateUser } from "../../../domain/models/ICreateUser";
 

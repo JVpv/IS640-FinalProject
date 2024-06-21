@@ -23,7 +23,9 @@ class UpdatePasswordsHistoryService {
         previous_password_5 
     }: IPasswordsHistory): Promise<PasswordsHistory> { 
         const redisCache = new RedisCache();
-        let passwordsHistory = await redisCache.recover<PasswordsHistory>(user_id);
+        let passwordsHistory = await redisCache.recover<PasswordsHistory>(id);
+
+        console.log(user_id);
 
         if (!passwordsHistory) {
             passwordsHistory = await this.passwordsHistoryRepository.find(user_id);
@@ -33,9 +35,16 @@ class UpdatePasswordsHistoryService {
             }
         }
 
+        passwordsHistory.current_password = current_password;
+        passwordsHistory.previous_password_1 = previous_password_1;
+        passwordsHistory.previous_password_2 = previous_password_2;
+        passwordsHistory.previous_password_3 = previous_password_3;
+        passwordsHistory.previous_password_4 = previous_password_4;
+        passwordsHistory.previous_password_5 = previous_password_5;
+
         await this.passwordsHistoryRepository.update(passwordsHistory);
 
-        await redisCache.save(user_id, passwordsHistory); 
+        await redisCache.save(id, passwordsHistory); 
 
         return passwordsHistory;
     }
