@@ -11,7 +11,6 @@ import { json } from 'stream/consumers';
 
 export default class PasswordsHistoryController {
     public async find(request: Request, response: Response): Promise<Response> {
-
         const user_id = request.params.user_id;
 
         const findPasswordsHistory = container.resolve(FindPasswordsHistoryService);
@@ -26,7 +25,6 @@ export default class PasswordsHistoryController {
         const user_id = request.body.user_id;
         const current_password = request.body.current_password;
 
-        // Error below!!!
         const createPasswordsHistory = container.resolve(CreatePasswordsHistoryService);
 
         const passwordsHistory = await createPasswordsHistory.execute({
@@ -39,6 +37,7 @@ export default class PasswordsHistoryController {
 
     public async save(request: Request, response: Response): Promise<Response> {
 
+        const id = request.body.id;
         const user_id = request.body.user_id;
         const current_password = request.body.current_password;
         const previous_password_1 = request.body.previous_password_1;
@@ -50,6 +49,7 @@ export default class PasswordsHistoryController {
         const updatePasswordsHistory = container.resolve(UpdatePasswordsHistoryService);
 
         const passwordsHistory = await updatePasswordsHistory.execute({
+            id,
             user_id,
             current_password,
             previous_password_1,

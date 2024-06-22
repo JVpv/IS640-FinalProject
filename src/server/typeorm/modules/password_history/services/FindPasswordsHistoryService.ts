@@ -13,7 +13,7 @@ class FindPasswordsHistoryService {
     public async execute( user_id: string ): Promise<PasswordsHistory | null> {
         const redisCache = new RedisCache();
 
-        let passwordsHistory = await redisCache.recover<PasswordsHistory>(user_id);
+        let passwordsHistory = await redisCache.recover<PasswordsHistory>(user_id+'-passwords');
 
         if (!passwordsHistory) {
             passwordsHistory = await this.passwordsHistoryRepository.find(user_id);
@@ -22,7 +22,7 @@ class FindPasswordsHistoryService {
                 throw new AppError('User not found!');
             }
 
-            await redisCache.save(user_id, passwordsHistory); 
+            await redisCache.save(user_id+'-passwords', passwordsHistory); 
         }
 
         return passwordsHistory;

@@ -14,7 +14,6 @@ class User implements IUser {
     email: string;
 
     @Column()
-    @Exclude()
     password: string;
 }
 

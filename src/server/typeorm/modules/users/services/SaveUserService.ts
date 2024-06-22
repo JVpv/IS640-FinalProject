@@ -1,4 +1,3 @@
-import { hash } from "bcryptjs";
 import AppError from "../../../../errors/AppError";
 import { IUsersRepository } from "../domain/repositories/IUsersRepository";
 import User from "../infra/typeorm/entities/User";
@@ -24,10 +23,8 @@ class SaveUserService {
             }
         }
 
-        const hashedPassword = await hash(password, 8)
-
         user.name = name;
-        user.password = hashedPassword;
+        user.password = password;
 
         await this.usersRepository.save(user);
 

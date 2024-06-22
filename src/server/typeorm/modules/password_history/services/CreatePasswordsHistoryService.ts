@@ -10,7 +10,6 @@ class CreatePasswordsHistoryService {
         private passwordsHistoryRepository: IPasswordsHistoryRepository
     ) {}
     public async execute({ current_password, user_id }: ICreatePasswordHistory): Promise<PasswordsHistory> {   
-        console.log("here!");
         const passwordsHistory = this.passwordsHistoryRepository.create({ 
             current_password: current_password,
             user_id: user_id

@@ -1,5 +1,4 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { Exclude } from 'class-transformer';
 import { IPasswordsHistory } from "../../../domain/models/IPasswordsHistory";
 
 @Entity('jose_password_history')
@@ -9,7 +8,6 @@ class PasswordsHistory implements IPasswordsHistory {
     id: string;
 
     @Column()
-    @Exclude()
     current_password: string;
     
     @Column({ type: 'varchar' })

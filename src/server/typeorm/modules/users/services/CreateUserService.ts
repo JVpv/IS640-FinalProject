@@ -1,4 +1,3 @@
-import { hash } from "bcryptjs";
 import AppError from "../../../../errors/AppError";
 import { IUsersRepository } from "../domain/repositories/IUsersRepository";
 import User from "../infra/typeorm/entities/User";
@@ -20,12 +19,12 @@ class CreateUserService {
         }
 
         // Move encryption to application layer!!!
-        const hashedPassword = await hash(password, 8);
+        
         
         const user = await this.usersRepository.create({ 
             name: name, 
             email: email, 
-            password: hashedPassword
+            password: password
         });
 
         return user;
